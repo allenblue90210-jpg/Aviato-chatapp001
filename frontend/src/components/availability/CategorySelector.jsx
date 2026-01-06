@@ -14,7 +14,7 @@ const CategorySelector = ({
   onClose, 
   currentSelected, 
   onApply,
-  maxSelections = 20,
+  maxSelections = 5,
   title = "Select any choice"
 }) => {
   const [localSelected, setLocalSelected] = useState([]);
