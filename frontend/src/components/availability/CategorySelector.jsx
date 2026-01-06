@@ -92,7 +92,7 @@ const CategorySelector = ({
           
           <ScrollArea className="flex-1 px-6 pb-4">
             <div className="flex flex-wrap gap-2 pb-4">
-              {mockInterests.map((interest) => {
+              {mockInterests.slice(0, 20).map((interest) => {
                 const isSelected = localSelected.includes(interest);
                 return (
                   <div
