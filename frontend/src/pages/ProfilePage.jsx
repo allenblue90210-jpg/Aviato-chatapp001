@@ -377,8 +377,8 @@ export default function ProfilePage() {
         onClose={setIsInterestsOpen}
         currentSelected={currentUser.selections || []}
         onApply={handleInterestsApply}
-        maxSelections={20}
-        title="My Vibe (Max 20)"
+        maxSelections={5}
+        title="My Vibe (Max 5)"
       />
 
       {/* Red Mode Confirmation */}
