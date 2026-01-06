@@ -30,37 +30,6 @@ const RatingModal = ({
     setSelectedReason(null);
   };
 
-  // Scenario B: User did NOT reply (ghosted)
-  if (!otherUserReplied) {
-    return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-        <div className="bg-white rounded-xl max-w-sm w-full p-6">
-          <div className="text-center">
-            <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-3">
-              <X className="w-6 h-6 text-red-600" />
-            </div>
-            <h2 className="text-lg font-bold text-gray-900 mb-1">Timer Expired</h2>
-            <p className="text-sm text-gray-600 mb-3">No response received</p>
-            <div className="bg-red-50 border border-red-200 rounded-lg p-3 mb-4">
-              <p className="text-xs text-red-800">
-                -10% penalty to {userName}
-              </p>
-            </div>
-            <button
-              onClick={() => {
-                onRate(false, 'No response / Ghosted');
-                onClose();
-              }}
-              className="w-full py-2 bg-gray-900 text-white rounded-lg text-sm font-medium hover:bg-gray-800"
-            >
-              OK
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   // Success state
   if (showSuccess) {
     return (
