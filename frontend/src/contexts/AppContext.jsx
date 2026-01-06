@@ -368,6 +368,63 @@ export const AppProvider = ({ children }) => {
     return { displayMode: user.availabilityMode, canMessage: status.available, statusText: status.statusText };
   };
 
+  // --- AUTOMATIC GHOSTING PENALTY ---
+  useEffect(() => {
+    if (!currentUser) return;
+
+    const interval = setInterval(() => {
+      const now = Date.now();
+      const TIMER_DURATION = 2 * 60 * 1000; // 2 minutes
+      
+      let penalizedUsers = [];
+
+      setConversations(prev => {
+        let hasChanges = false;
+        const updated = prev.map(c => {
+          // Skip if already rated, expired, or timer not started
+          if (c.rated || c.timerExpired || !c.timerStarted) return c;
+
+          const elapsed = now - c.timerStarted;
+          
+          if (elapsed >= TIMER_DURATION) {
+            hasChanges = true;
+            
+            // Logic: If I sent the last message, and time expired => They ghosted me
+            // If lastMessageSenderId matches currentUser.id, it means I am waiting for them
+            const theyGhosted = c.lastMessageSenderId === currentUser.id;
+            
+            if (theyGhosted) {
+                penalizedUsers.push(c.userId);
+            }
+
+            return {
+              ...c,
+              timerExpired: true,
+              rated: true,
+              ratingType: theyGhosted ? 'bad' : 'neutral',
+              ratingReason: theyGhosted ? 'No response / Ghosted' : 'Time expired'
+            };
+          }
+          return c;
+        });
+
+        if (hasChanges) return updated;
+        return prev;
+      });
+
+      // Apply penalties side effect
+      if (penalizedUsers.length > 0) {
+        penalizedUsers.forEach(uid => {
+            updateUserApproval(uid, -15);
+        });
+        showToast(`${penalizedUsers.length} user(s) penalized for ghosting automatically`, 'error');
+      }
+
+    }, 2000); // Check every 2 seconds
+
+    return () => clearInterval(interval);
+  }, [currentUser, updateUserApproval, showToast]);
+
   const value = {
     currentUser, isAuthenticated: !!currentUser, login, logout,
     users, getUserById, currentSelections, addSelection, removeSelection, clearSelections, findMatches,
