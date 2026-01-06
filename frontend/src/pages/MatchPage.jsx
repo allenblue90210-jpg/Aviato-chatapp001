@@ -108,9 +108,9 @@ function MatchCard({ user, onMessage }) {
           </div>
 
           <div className="mt-2 flex items-center gap-4 text-sm text-gray-600">
-            <div className="flex items-center gap-1">
-              <ThumbsUp className="w-3 h-3 text-gray-400" />
-              <span>{user.approvalRating > 0 ? `+${user.approvalRating}` : user.approvalRating}</span>
+            <div className={`flex items-center gap-1 ${getApprovalColor(user.approvalRating)}`}>
+              <ThumbsUp className="w-3 h-3" />
+              <span className="font-bold">{user.approvalRating > 0 ? `+${user.approvalRating}` : user.approvalRating}</span>
             </div>
             <div className="flex items-center gap-1">
               <Star className="w-3 h-3 text-yellow-400" />
