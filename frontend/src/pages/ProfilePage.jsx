@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '../contexts/AppContext';
-import { Settings, Camera } from 'lucide-react';
+import { Settings, Camera, Edit2, Plus } from 'lucide-react';
 import { Button } from '../components/ui/button';
+import { Badge } from '../components/ui/badge';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -15,16 +16,18 @@ import {
 } from "../components/ui/alert-dialog";
 import ModeCard from '../components/profile/ModeCard';
 import ModeSettingsDialog from '../components/profile/ModeSettingsDialog';
+import CategorySelector from '../components/availability/CategorySelector';
 import { AvailabilityMode } from '../data/mockData';
 
 export default function ProfilePage() {
   const navigate = useNavigate();
-  const { currentUser, isAuthenticated, setAvailabilityMode, showToast } = useAppContext();
+  const { currentUser, isAuthenticated, setAvailabilityMode, showToast, updateUserSelections } = useAppContext();
   
   // State for modals
   const [deactivateMode, setDeactivateMode] = useState(null);
   const [settingsMode, setSettingsMode] = useState(null);
   const [confirmRedMode, setConfirmRedMode] = useState(false);
+  const [isInterestsOpen, setIsInterestsOpen] = useState(false);
   
   useEffect(() => {
     if (!isAuthenticated) {
@@ -44,6 +47,10 @@ export default function ProfilePage() {
   }
 
   const currentMode = currentUser.availabilityMode;
+
+  const handleInterestsApply = (newSelections) => {
+    updateUserSelections(newSelections);
+  };
 
   const modes = [
     {
@@ -254,6 +261,47 @@ export default function ProfilePage() {
           <p className="text-gray-500">{currentUser.location || 'San Francisco, CA'}</p>
         </div>
 
+        {/* My Vibe / Interests Section */}
+        <div>
+          <div className="flex items-center justify-between mb-2">
+            <h3 className="font-bold text-lg text-gray-900">My Vibe ({currentUser.selections?.length || 0}/5)</h3>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="text-blue-600 hover:text-blue-700 p-0 h-auto font-medium"
+              onClick={() => setIsInterestsOpen(true)}
+            >
+              {currentUser.selections?.length > 0 ? 'Edit' : 'Add'}
+            </Button>
+          </div>
+          
+          <div 
+            className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm min-h-[80px] cursor-pointer hover:border-blue-300 transition-colors"
+            onClick={() => setIsInterestsOpen(true)}
+          >
+            {currentUser.selections?.length > 0 ? (
+              <div className="flex flex-wrap gap-2">
+                {currentUser.selections.map((interest) => (
+                  <Badge 
+                    key={interest} 
+                    variant="secondary" 
+                    className="bg-blue-50 text-blue-700 hover:bg-blue-100 border-blue-100 px-3 py-1"
+                  >
+                    {interest}
+                  </Badge>
+                ))}
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center py-2 text-gray-400 gap-2">
+                <div className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center">
+                  <Plus className="w-5 h-5" />
+                </div>
+                <span className="text-sm">Add up to 5 interests to find matches</span>
+              </div>
+            )}
+          </div>
+        </div>
+
         {/* Profile Set Regulation */}
         <div>
           <h3 className="font-bold text-lg text-gray-900 mb-2">Profile Set Regulation</h3>
@@ -321,6 +369,16 @@ export default function ProfilePage() {
          mode={settingsMode}
          isOpen={!!settingsMode}
          onClose={() => setSettingsMode(null)}
+      />
+
+      {/* Interests Selector Modal */}
+      <CategorySelector
+        isOpen={isInterestsOpen}
+        onClose={setIsInterestsOpen}
+        currentSelected={currentUser.selections || []}
+        onApply={handleInterestsApply}
+        maxSelections={5}
+        title="My Vibe (Max 5)"
       />
 
       {/* Red Mode Confirmation */}
