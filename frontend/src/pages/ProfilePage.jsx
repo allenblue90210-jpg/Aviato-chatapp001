@@ -264,7 +264,7 @@ export default function ProfilePage() {
         {/* My Vibe / Interests Section */}
         <div>
           <div className="flex items-center justify-between mb-2">
-            <h3 className="font-bold text-lg text-gray-900">My Vibe ({currentUser.selections?.length || 0}/5)</h3>
+            <h3 className="font-bold text-lg text-gray-900">My Vibe ({currentUser.selections?.length || 0}/20)</h3>
             <Button 
               variant="ghost" 
               size="sm" 
@@ -296,7 +296,7 @@ export default function ProfilePage() {
                 <div className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center">
                   <Plus className="w-5 h-5" />
                 </div>
-                <span className="text-sm">Add up to 5 interests to find matches</span>
+                <span className="text-sm">Add up to 20 interests to find matches</span>
               </div>
             )}
           </div>
