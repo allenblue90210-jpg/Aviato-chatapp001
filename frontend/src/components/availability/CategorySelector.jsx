@@ -50,19 +50,19 @@ const CategorySelector = ({
   return (
     <Sheet open={isOpen} onOpenChange={(open) => !open && onClose(false)}>
       <SheetContent side="bottom" className="h-[90vh] sm:h-[600px] flex flex-col rounded-t-xl bg-white p-0 [&>button]:hidden">
-        <SheetHeader className="px-6 pt-4 pb-2 relative border-b border-gray-100 flex flex-row items-center justify-between space-y-0">
-          <div className="flex-1">
-            <SheetTitle className="text-xl font-bold text-gray-900">Match Preferences</SheetTitle>
-            <SheetDescription className="text-gray-500 text-xs mt-1">
-              Select interests to find your vibe.
+        <SheetHeader className="px-4 py-3 relative border-b border-gray-100 flex items-center justify-center shrink-0">
+          <div className="text-center w-full">
+            <SheetTitle className="text-lg font-bold text-gray-900">Select any choice</SheetTitle>
+            <SheetDescription className="text-xs text-gray-500 mt-0.5">
+              Find your vibe
             </SheetDescription>
           </div>
           <Button 
             variant="ghost" 
+            size="sm"
             onClick={() => onClose(false)}
-            className="text-gray-500 hover:text-gray-900 hover:bg-gray-100 -mr-2"
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-red-600 hover:bg-red-50 font-medium"
           >
-            <X className="mr-1 h-4 w-4" />
             Cancel
           </Button>
         </SheetHeader>
