@@ -49,24 +49,22 @@ const CategorySelector = ({
 
   return (
     <Sheet open={isOpen} onOpenChange={(open) => !open && onClose(false)}>
-      <SheetContent side="bottom" className="h-[90vh] sm:h-[600px] flex flex-col rounded-t-xl bg-white p-0">
-        <SheetHeader className="px-6 pt-6 pb-2 relative border-b border-gray-100">
-          <div className="flex justify-between items-start pr-8">
-            <div>
-              <SheetTitle className="text-xl font-bold text-gray-900">Match Preferences</SheetTitle>
-              <SheetDescription className="text-gray-500">
-                Select interests to find people with similar vibes.
-              </SheetDescription>
-            </div>
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              onClick={() => onClose(false)}
-              className="absolute right-4 top-4 h-8 w-8 text-gray-500 hover:text-gray-900 bg-gray-100 rounded-full"
-            >
-              <X className="h-4 w-4" />
-            </Button>
+      <SheetContent side="bottom" className="h-[90vh] sm:h-[600px] flex flex-col rounded-t-xl bg-white p-0 [&>button]:hidden">
+        <SheetHeader className="px-6 pt-4 pb-2 relative border-b border-gray-100 flex flex-row items-center justify-between space-y-0">
+          <div className="flex-1">
+            <SheetTitle className="text-xl font-bold text-gray-900">Match Preferences</SheetTitle>
+            <SheetDescription className="text-gray-500 text-xs mt-1">
+              Select interests to find your vibe.
+            </SheetDescription>
           </div>
+          <Button 
+            variant="ghost" 
+            onClick={() => onClose(false)}
+            className="text-gray-500 hover:text-gray-900 hover:bg-gray-100 -mr-2"
+          >
+            <X className="mr-1 h-4 w-4" />
+            Cancel
+          </Button>
         </SheetHeader>
         
         <div className="flex-1 overflow-hidden px-6 py-4">
