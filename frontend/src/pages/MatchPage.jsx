@@ -27,7 +27,8 @@ export default function MatchPage() {
     addSelection, 
     removeSelection, 
     clearSelections, 
-    findMatches 
+    findMatches,
+    setSelections
   } = useAppContext();
 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
