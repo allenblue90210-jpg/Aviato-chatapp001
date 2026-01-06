@@ -299,7 +299,7 @@ export const AppProvider = ({ children }) => {
       if (u.id === userId) {
         return {
           ...u,
-          approvalRating: Math.max(-100, Math.min(100, u.approvalRating + change))
+          approvalRating: u.approvalRating + change
         };
       }
       return u;
