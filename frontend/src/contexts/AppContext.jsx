@@ -365,7 +365,7 @@ export const AppProvider = ({ children }) => {
     users, getUserById, currentSelections, addSelection, removeSelection, clearSelections, findMatches,
     conversations, startChat, updateConversationTimer, sendMessage, receiveMessage, 
     markConversationRated, updateUserApproval, rateConversation, getConversation,
-    setAvailabilityMode, getCurrentMode, theme, setTheme, deleteAllChats, showToast 
+    setAvailabilityMode, getCurrentMode, theme, setTheme, deleteAllChats, showToast, setSelections 
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
