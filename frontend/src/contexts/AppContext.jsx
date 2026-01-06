@@ -347,17 +347,18 @@ export const AppProvider = ({ children }) => {
         availabilityMode: mode,
         availability: { ...currentUser.availability, ...modeSettings }
     };
+    setCurrentUser(updatedUser);
+    setUsers(prev => prev.map(u => u.id === updatedUser.id ? updatedUser : u));
+
+    if (!suppressToast) showToast('Mode updated', 'success');
+  }, [currentUser, showToast]);
+
   const updateUserSelections = useCallback((newSelections) => {
     if (!currentUser) return;
     const updatedUser = { ...currentUser, selections: newSelections };
     setCurrentUser(updatedUser);
     setUsers(prev => prev.map(u => u.id === currentUser.id ? updatedUser : u));
     showToast('Profile selections updated', 'success');
-  }, [currentUser, showToast]);
-    setCurrentUser(updatedUser);
-    setUsers(prev => prev.map(u => u.id === updatedUser.id ? updatedUser : u));
-
-    if (!suppressToast) showToast('Mode updated', 'success');
   }, [currentUser, showToast]);
 
   const getCurrentMode = (userId) => {
