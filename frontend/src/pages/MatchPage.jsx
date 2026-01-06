@@ -13,7 +13,7 @@ import {
   ThumbsUp,
   Star
 } from 'lucide-react';
-import { checkUserAvailability, getModeColor } from '../utils/availability';
+import { checkUserAvailability, getModeColor, getApprovalColor } from '../utils/availability';
 import { AvailabilityMode } from '../data/mockData';
 
 export default function MatchPage() {
