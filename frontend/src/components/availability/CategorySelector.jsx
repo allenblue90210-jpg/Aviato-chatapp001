@@ -13,7 +13,9 @@ const CategorySelector = ({
   isOpen, 
   onClose, 
   currentSelected, 
-  onApply
+  onApply,
+  maxSelections = 20,
+  title = "Select any choice"
 }) => {
   const [localSelected, setLocalSelected] = useState([]);
 
@@ -29,7 +31,7 @@ const CategorySelector = ({
       if (prev.includes(interest)) {
         return prev.filter(i => i !== interest);
       } else {
-        if (prev.length >= 20) return prev; 
+        if (prev.length >= maxSelections) return prev; 
         return [...prev, interest];
       }
     });
@@ -55,7 +57,7 @@ const CategorySelector = ({
           
           {/* Centered Title */}
           <div className="font-bold text-gray-900 text-lg">
-            Select any choice
+            {title}
           </div>
 
           {/* Cancel Button - Absolute Right */}
@@ -74,7 +76,7 @@ const CategorySelector = ({
           {/* Count & Clear - Sticky within content */}
           <div className="flex-none px-6 py-3 flex items-center justify-between bg-white z-10">
             <span className="text-sm font-medium text-gray-600">
-              Selected: <span className="text-blue-600 font-bold">{localSelected.length}</span>
+              Selected: <span className="text-blue-600 font-bold">{localSelected.length}/{maxSelections}</span>
             </span>
             {localSelected.length > 0 && (
               <Button 
