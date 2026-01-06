@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Sheet, 
-  SheetContent, 
-  SheetHeader, 
-  SheetTitle, 
-  SheetDescription,
+  SheetContent,
   SheetFooter
 } from '../ui/sheet';
 import { Button } from '../ui/button';
@@ -50,24 +47,28 @@ const CategorySelector = ({
   return (
     <Sheet open={isOpen} onOpenChange={(open) => !open && onClose(false)}>
       <SheetContent side="bottom" className="h-[90vh] sm:h-[600px] flex flex-col rounded-t-xl bg-white p-0 [&>button]:hidden">
-        <SheetHeader className="px-4 py-3 relative border-b border-gray-100 flex items-center justify-center shrink-0">
-          <div className="text-center w-full">
-            <SheetTitle className="text-lg font-bold text-gray-900">Select any choice</SheetTitle>
-            <SheetDescription className="text-xs text-gray-500 mt-0.5">
-              Find your vibe
-            </SheetDescription>
-          </div>
-          <Button 
-            variant="ghost" 
-            size="sm"
-            onClick={() => onClose(false)}
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-red-600 hover:bg-red-50 font-medium"
-          >
-            Cancel
-          </Button>
-        </SheetHeader>
         
-        <div className="flex-1 overflow-hidden px-6 py-4">
+        {/* Custom Header with Absolute Positioning */}
+        <div className="h-16 px-4 relative border-b border-gray-100 flex items-center justify-center shrink-0 bg-white rounded-t-xl z-20">
+          
+          {/* Centered Title */}
+          <div className="text-center">
+            <h2 className="text-lg font-bold text-gray-900 leading-none">Select any choice</h2>
+            <p className="text-xs text-gray-500 mt-1">Find your vibe</p>
+          </div>
+
+          {/* Cancel Button - Absolute Right */}
+          <button 
+            onClick={() => onClose(false)}
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-red-600 hover:bg-red-50 font-medium px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1"
+          >
+            <X className="w-4 h-4" />
+            Cancel
+          </button>
+        </div>
+        
+        {/* Content Area */}
+        <div className="flex-1 overflow-hidden px-6 py-4 relative z-10 bg-white">
           <div className="mb-4 flex items-center justify-between">
             <span className="text-sm font-medium text-gray-500">
               Selected: {localSelected.length}
@@ -110,7 +111,8 @@ const CategorySelector = ({
           </ScrollArea>
         </div>
 
-        <SheetFooter className="px-6 pb-8 pt-4 border-t border-gray-100 bg-white flex gap-3 flex-row sm:justify-end">
+        {/* Footer */}
+        <div className="px-6 pb-8 pt-4 border-t border-gray-100 bg-white flex gap-3 flex-row sm:justify-end z-20">
           <Button 
             variant="outline" 
             className="flex-1 sm:flex-none h-12 text-lg font-medium border-gray-200 text-gray-700 hover:bg-gray-50 hover:text-gray-900" 
@@ -124,7 +126,7 @@ const CategorySelector = ({
           >
             Apply ({localSelected.length})
           </Button>
-        </SheetFooter>
+        </div>
       </SheetContent>
     </Sheet>
   );
