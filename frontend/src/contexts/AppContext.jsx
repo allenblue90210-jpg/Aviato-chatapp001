@@ -113,9 +113,13 @@ export const AppProvider = ({ children }) => {
   const deleteAllChats = () => setConversations([]);
 
   const addSelection = (item) => {
-    if (currentSelections.length < 5 && !currentSelections.includes(item)) {
-      setCurrentSelections([...currentSelections, item]);
+    if (!currentSelections.includes(item)) {
+      setCurrentSelections(prev => [...prev, item]);
     }
+  };
+
+  const setSelections = (items) => {
+    setCurrentSelections(items);
   };
 
   const removeSelection = (item) => {
