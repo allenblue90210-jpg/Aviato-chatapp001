@@ -118,9 +118,7 @@ export function calculateMatchPercentage(userSelections, otherSelections) {
 }
 
 export function getApprovalColor(rating) {
-  if (rating >= 90) return 'text-green-600';
-  if (rating >= 70) return 'text-green-500';
-  if (rating >= 50) return 'text-green-400';
-  if (rating >= 30) return 'text-orange-500';
-  return 'text-red-600';
+  if (rating < 0) return 'text-red-600';
+  if (rating < 11) return 'text-yellow-500';
+  return 'text-green-600';
 }
