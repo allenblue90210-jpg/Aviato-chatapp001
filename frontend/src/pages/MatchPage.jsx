@@ -118,6 +118,7 @@ export default function MatchPage() {
         onClose={setIsFilterOpen}
         currentSelected={currentSelections}
         onApply={handleApplyFilters}
+        maxSelections={5}
       />
     </div>
   );
