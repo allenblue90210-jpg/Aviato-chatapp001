@@ -2,9 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { 
   Sheet, 
   SheetContent, 
-  SheetHeader, 
-  SheetTitle, 
-  SheetDescription,
   SheetFooter
 } from '../ui/sheet';
 import { Button } from '../ui/button';
@@ -49,29 +46,34 @@ const CategorySelector = ({
 
   return (
     <Sheet open={isOpen} onOpenChange={(open) => !open && onClose(false)}>
-      <SheetContent side="bottom" className="h-[90vh] sm:h-[600px] flex flex-col rounded-t-xl bg-white p-0 [&>button]:hidden">
-        {/* Restored to Flex Row Layout which was stable */}
-        <SheetHeader className="px-6 py-4 border-b border-gray-100 flex flex-row items-center justify-between space-y-0">
-          <div className="flex-1 flex flex-col justify-center">
-            <SheetTitle className="text-xl font-bold text-gray-900">Match Preferences</SheetTitle>
-            <SheetDescription className="text-gray-500 text-xs mt-0.5">
-              Select interests to find your vibe.
-            </SheetDescription>
+      <SheetContent 
+        side="bottom" 
+        className="flex flex-col rounded-t-xl bg-white p-0 [&>button]:hidden h-[85vh] max-h-[85vh]"
+      >
+        {/* Header - Fixed at Top */}
+        <div className="flex-none h-14 border-b border-gray-100 flex items-center justify-center relative bg-white rounded-t-xl z-10 px-4">
+          
+          {/* Centered Title */}
+          <div className="font-bold text-gray-900 text-lg">
+            Select any choice
           </div>
+
+          {/* Cancel Button - Absolute Right */}
           <Button 
-            variant="ghost" 
+            variant="ghost"
             size="sm"
             onClick={() => onClose(false)}
-            className="text-gray-500 hover:text-red-600 hover:bg-red-50 -mr-2"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-900 hover:bg-gray-100"
           >
-            <X className="mr-1 h-4 w-4" />
             Cancel
           </Button>
-        </SheetHeader>
+        </div>
         
-        <div className="flex-1 overflow-hidden px-6 py-4">
-          <div className="mb-4 flex items-center justify-between">
-            <span className="text-sm font-medium text-gray-500">
+        {/* Content Area - Scrollable */}
+        <div className="flex-1 overflow-hidden relative bg-white flex flex-col">
+          {/* Count & Clear - Sticky within content */}
+          <div className="flex-none px-6 py-3 flex items-center justify-between bg-white z-10">
+            <span className="text-sm font-medium text-gray-600">
               Selected: <span className="text-blue-600 font-bold">{localSelected.length}</span>
             </span>
             {localSelected.length > 0 && (
@@ -79,15 +81,15 @@ const CategorySelector = ({
                 variant="ghost" 
                 size="sm" 
                 onClick={handleClear}
-                className="text-red-500 hover:text-red-600 h-auto p-0 text-xs uppercase font-bold"
+                className="text-red-500 hover:text-red-600 h-8 px-2 text-xs uppercase font-bold"
               >
                 Clear all
               </Button>
             )}
           </div>
           
-          <ScrollArea className="h-full pr-4 pb-20">
-            <div className="flex flex-wrap gap-2">
+          <ScrollArea className="flex-1 px-6 pb-4">
+            <div className="flex flex-wrap gap-2 pb-4">
               {mockInterests.map((interest) => {
                 const isSelected = localSelected.includes(interest);
                 return (
@@ -95,7 +97,7 @@ const CategorySelector = ({
                     key={interest}
                     onClick={() => toggleInterest(interest)}
                     className={`
-                      cursor-pointer px-3 py-2 rounded-full text-sm font-medium border transition-all
+                      cursor-pointer px-3 py-2 rounded-full text-sm font-medium border transition-all duration-200 select-none
                       flex items-center gap-1.5
                       ${isSelected 
                         ? 'bg-blue-600 text-white border-blue-600 shadow-sm' 
@@ -103,7 +105,7 @@ const CategorySelector = ({
                       }
                     `}
                   >
-                    {isSelected && <Check className="w-3.5 h-3.5" />}
+                    {isSelected && <Check className="w-3.5 h-3.5 stroke-[3]" />}
                     {interest}
                   </div>
                 );
@@ -112,7 +114,8 @@ const CategorySelector = ({
           </ScrollArea>
         </div>
 
-        <SheetFooter className="px-6 pb-8 pt-4 border-t border-gray-100 bg-white flex gap-3 flex-row sm:justify-end">
+        {/* Footer - Fixed at Bottom */}
+        <SheetFooter className="flex-none px-6 py-4 border-t border-gray-100 bg-white flex gap-3 flex-row justify-end z-10">
           <Button 
             variant="outline" 
             className="flex-1 sm:flex-none h-12 text-lg font-medium border-gray-200 text-gray-700 hover:bg-gray-50 hover:text-gray-900" 
