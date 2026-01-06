@@ -43,12 +43,7 @@ export default function MatchPage() {
   };
 
   const handleApplyFilters = (newSelections) => {
-    // Replace all selections
-    clearSelections();
-    // We need to add them one by one since context doesn't have a replace method
-    // Note: This relies on context state updates being batched or fast enough
-    // Ideally we'd add a setSelections method to context, but this works for MVP
-    newSelections.forEach(item => addSelection(item));
+    setSelections(newSelections);
     setIsFilterOpen(false);
   };
 
