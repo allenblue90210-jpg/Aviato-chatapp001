@@ -42,12 +42,14 @@ export default function MatchPage() {
     navigate(`/chat/${userId}`);
   };
 
-  const toggleSelection = (item) => {
-    if (currentSelections.includes(item)) {
-      removeSelection(item);
-    } else {
-      addSelection(item);
-    }
+  const handleApplyFilters = (newSelections) => {
+    // Replace all selections
+    clearSelections();
+    // We need to add them one by one since context doesn't have a replace method
+    // Note: This relies on context state updates being batched or fast enough
+    // Ideally we'd add a setSelections method to context, but this works for MVP
+    newSelections.forEach(item => addSelection(item));
+    setIsFilterOpen(false);
   };
 
   return (
@@ -118,9 +120,8 @@ export default function MatchPage() {
       <CategorySelector 
         isOpen={isFilterOpen}
         onClose={setIsFilterOpen}
-        selected={currentSelections}
-        onToggle={toggleSelection}
-        onClear={clearSelections}
+        currentSelected={currentSelections}
+        onApply={handleApplyFilters}
       />
     </div>
   );
