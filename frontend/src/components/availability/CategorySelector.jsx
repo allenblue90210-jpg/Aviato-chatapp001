@@ -11,7 +11,7 @@ import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
 import { ScrollArea } from '../ui/scroll-area';
 import { mockInterests } from '../../data/mockData';
-import { Check } from 'lucide-react';
+import { Check, X } from 'lucide-react';
 
 const CategorySelector = ({ 
   isOpen, 
@@ -22,15 +22,27 @@ const CategorySelector = ({
 }) => {
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
-      <SheetContent side="bottom" className="h-[90vh] sm:h-[600px] flex flex-col rounded-t-xl">
-        <SheetHeader>
-          <SheetTitle className="text-xl font-bold">Match Preferences</SheetTitle>
-          <SheetDescription>
-            Select interests to find people with similar vibes.
-          </SheetDescription>
+      <SheetContent side="bottom" className="h-[90vh] sm:h-[600px] flex flex-col rounded-t-xl bg-white p-0">
+        <SheetHeader className="px-6 pt-6 pb-2 relative border-b border-gray-100">
+          <div className="flex justify-between items-start pr-8">
+            <div>
+              <SheetTitle className="text-xl font-bold text-gray-900">Match Preferences</SheetTitle>
+              <SheetDescription className="text-gray-500">
+                Select interests to find people with similar vibes.
+              </SheetDescription>
+            </div>
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={() => onClose(false)}
+              className="absolute right-4 top-4 h-8 w-8 text-gray-500 hover:text-gray-900 bg-gray-100 rounded-full"
+            >
+              <X className="h-4 w-4" />
+            </Button>
+          </div>
         </SheetHeader>
         
-        <div className="flex-1 overflow-hidden py-4">
+        <div className="flex-1 overflow-hidden px-6 py-4">
           <div className="mb-4 flex items-center justify-between">
             <span className="text-sm font-medium text-gray-500">
               Selected: {selected.length}
@@ -47,7 +59,7 @@ const CategorySelector = ({
             )}
           </div>
           
-          <ScrollArea className="h-full pr-4">
+          <ScrollArea className="h-full pr-4 pb-20">
             <div className="flex flex-wrap gap-2">
               {mockInterests.map((interest) => {
                 const isSelected = selected.includes(interest);
@@ -73,9 +85,9 @@ const CategorySelector = ({
           </ScrollArea>
         </div>
 
-        <SheetFooter>
-          <Button className="w-full bg-blue-600 hover:bg-blue-700" onClick={() => onClose(false)}>
-            Done ({selected.length})
+        <SheetFooter className="px-6 pb-8 pt-4 border-t border-gray-100 bg-white">
+          <Button className="w-full bg-blue-600 hover:bg-blue-700 h-12 text-lg font-medium shadow-md" onClick={() => onClose(false)}>
+            Apply Filters ({selected.length})
           </Button>
         </SheetFooter>
       </SheetContent>
