@@ -187,13 +187,13 @@ function MatchCard({ user, onMessage }) {
       {/* Common Interests Preview if matched */}
       {user.matchPercentage !== undefined && (
           <div className="mt-3 flex gap-1 flex-wrap">
-             {user.selections?.slice(0, 3).map(interest => (
+             {user.selections?.slice(0, 5).map(interest => (
                  <span key={interest} className="text-[10px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">
                      {interest}
                  </span>
              ))}
-             {user.selections?.length > 3 && (
-                 <span className="text-[10px] text-gray-400 px-1 py-0.5">+{user.selections.length - 3} more</span>
+             {user.selections?.length > 5 && (
+                 <span className="text-[10px] text-gray-400 px-1 py-0.5">+{user.selections.length - 5} more</span>
              )}
           </div>
       )}
